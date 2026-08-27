@@ -35,23 +35,29 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- ELEMEN 3D MENGAMBANG --- */
+        /* --- ELEMEN 3D MENGAMBANG (DI-UPDATE) --- */
         .floating-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: -1; overflow: hidden;
+            position: fixed; /* Membuatnya diam di tempat saat di-scroll */
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; /* Memastikan tidak bisa diklik / tidak menghalangi mouse */
+            z-index: -10; /* Lapisan paling belakang */
+            overflow: hidden;
         }
         .floating-emoji {
-            position: absolute; font-size: 2.5rem;
+            position: absolute; 
+            font-size: 2.5rem;
+            opacity: 0.35; /* Dibuat agak transparan agar teks selalu terbaca jelas */
             filter: drop-shadow(0 15px 15px rgba(0,0,0,0.15));
             animation: float3D 12s infinite ease-in-out;
             transform-style: preserve-3d;
         }
-        /* Posisi dan pengaturan animasi tiap emoji */
-        .emoji-1 { left: 10%; top: 15%; animation-duration: 14s; }
-        .emoji-2 { left: 85%; top: 25%; font-size: 3rem; animation-duration: 18s; animation-delay: -3s; }
-        .emoji-3 { left: 75%; top: 75%; font-size: 2rem; animation-duration: 12s; animation-delay: -7s; }
-        .emoji-4 { left: 15%; top: 80%; font-size: 3.5rem; animation-duration: 20s; animation-delay: -5s; }
-        .emoji-5 { left: 50%; top: 50%; font-size: 2.5rem; animation-duration: 15s; animation-delay: -10s; }
+        
+        /* Posisi digeser ke area tepi layar */
+        .emoji-1 { left: 8%; top: 15%; animation-duration: 14s; }
+        .emoji-2 { left: 88%; top: 20%; font-size: 3rem; animation-duration: 18s; animation-delay: -3s; }
+        .emoji-3 { left: 82%; top: 75%; font-size: 2.5rem; animation-duration: 12s; animation-delay: -7s; }
+        .emoji-4 { left: 10%; top: 80%; font-size: 3.5rem; animation-duration: 20s; animation-delay: -5s; }
+        .emoji-5 { left: 45%; top: 10%; font-size: 2rem; animation-duration: 15s; animation-delay: -10s; }
         
         @keyframes float3D {
             0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
