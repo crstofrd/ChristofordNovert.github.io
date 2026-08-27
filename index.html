@@ -21,7 +21,6 @@
             font-family: 'Roboto', sans-serif;
             color: var(--dark-text);
             line-height: 1.6;
-            /* Latar Belakang Gradien Animasi yang Diperkaya */
             background: linear-gradient(-45deg, #e0eafc, #cde0f5, #dcf0d5, #fce0e5);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -35,24 +34,23 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- ELEMEN 3D MENGAMBANG (DI-UPDATE) --- */
+        /* --- ELEMEN 3D MENGAMBANG (DI-UPDATE: 100% Solid & Fixed) --- */
         .floating-bg {
-            position: fixed; /* Membuatnya diam di tempat saat di-scroll */
+            position: fixed; /* Diam di tempat, tidak ikut di-scroll */
             top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; /* Memastikan tidak bisa diklik / tidak menghalangi mouse */
-            z-index: -10; /* Lapisan paling belakang */
+            pointer-events: none; /* Tidak menghalangi interaksi/klik pada teks */
+            z-index: -10; /* Berada di lapisan paling belakang */
             overflow: hidden;
         }
         .floating-emoji {
             position: absolute; 
             font-size: 2.5rem;
-            opacity: 0.35; /* Dibuat agak transparan agar teks selalu terbaca jelas */
-            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.15));
+            opacity: 1; /* Transparansi 100% (Solid) */
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2)); /* Bayangan dipertegas sedikit agar lebih 3D */
             animation: float3D 12s infinite ease-in-out;
             transform-style: preserve-3d;
         }
         
-        /* Posisi digeser ke area tepi layar */
         .emoji-1 { left: 8%; top: 15%; animation-duration: 14s; }
         .emoji-2 { left: 88%; top: 20%; font-size: 3rem; animation-duration: 18s; animation-delay: -3s; }
         .emoji-3 { left: 82%; top: 75%; font-size: 2.5rem; animation-duration: 12s; animation-delay: -7s; }
