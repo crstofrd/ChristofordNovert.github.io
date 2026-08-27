@@ -34,32 +34,24 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- ELEMEN 3D MENGAMBANG (DI-UPDATE: 100% Solid & Fixed) --- */
-        .floating-bg {
-            position: fixed; /* Diam di tempat, tidak ikut di-scroll */
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; /* Tidak menghalangi interaksi/klik pada teks */
-            z-index: -10; /* Berada di lapisan paling belakang */
-            overflow: hidden;
-        }
-        .floating-emoji {
-            position: absolute; 
-            font-size: 2.5rem;
-            opacity: 1; /* Transparansi 100% (Solid) */
-            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.2)); /* Bayangan dipertegas sedikit agar lebih 3D */
-            animation: float3D 12s infinite ease-in-out;
+        /* --- ELEMEN EMOJI MENGAMBANG DI TEMPAT --- */
+        .inline-floating-emoji {
+            display: inline-block;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.15));
+            animation: floatInline 4s infinite ease-in-out;
             transform-style: preserve-3d;
+            vertical-align: middle;
         }
         
-        .emoji-1 { left: 8%; top: 15%; animation-duration: 14s; }
-        .emoji-2 { left: 88%; top: 20%; font-size: 3rem; animation-duration: 18s; animation-delay: -3s; }
-        .emoji-3 { left: 82%; top: 75%; font-size: 2.5rem; animation-duration: 12s; animation-delay: -7s; }
-        .emoji-4 { left: 10%; top: 80%; font-size: 3.5rem; animation-duration: 20s; animation-delay: -5s; }
-        .emoji-5 { left: 45%; top: 10%; font-size: 2rem; animation-duration: 15s; animation-delay: -10s; }
+        /* Variasi waktu animasi agar tidak bergerak bersamaan */
+        .delay-1 { animation-delay: 0s; }
+        .delay-2 { animation-delay: -1s; }
+        .delay-3 { animation-delay: -2s; }
+        .delay-4 { animation-delay: -3s; }
         
-        @keyframes float3D {
+        @keyframes floatInline {
             0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-            50% { transform: translateY(-40px) rotateX(25deg) rotateY(20deg) rotateZ(15deg); }
+            50% { transform: translateY(-15px) rotateX(15deg) rotateY(10deg) rotateZ(5deg); }
         }
 
         /* --- ANIMASI SCROLL REVEAL --- */
@@ -107,6 +99,7 @@
         .hero-image-container {
             flex: 1; display: flex; justify-content: center; perspective: 1000px;
             animation: slideInRight 1s ease-out forwards;
+            position: relative; /* Penting untuk penempatan emoji bumi */
         }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
 
@@ -159,15 +152,6 @@
 </head>
 <body>
 
-    <!-- Container Elemen 3D Melayang -->
-    <div class="floating-bg">
-        <div class="floating-emoji emoji-1">🚀</div>
-        <div class="floating-emoji emoji-2">🌍</div>
-        <div class="floating-emoji emoji-3">💡</div>
-        <div class="floating-emoji emoji-4">🌱</div>
-        <div class="floating-emoji emoji-5">⭐</div>
-    </div>
-
     <nav>
         <div style="font-weight: bold; font-size: 1.2rem; font-family: 'Product Sans', sans-serif;">Christoford Novert</div>
         <div>
@@ -180,18 +164,24 @@
 
     <section class="hero">
         <div class="hero-text">
+            <!-- Emoji Roket di atas teks Hi! -->
+            <div style="font-size: 3.5rem; margin-bottom: -10px;">
+                <span class="inline-floating-emoji delay-1">🚀</span>
+            </div>
             <h1>Hi! I am Christoford Novert</h1>
             <p>Informatics Student at Universitas Sam Ratulangi Manado | Passionate about Tech Communities & Open Source.</p>
             <a href="#experience" class="btn">Look Around</a>
         </div>
         <div class="hero-image-container">
+            <!-- Emoji Bumi di kanan atas foto profil -->
+            <span class="inline-floating-emoji delay-2" style="position: absolute; top: -15px; right: 0px; font-size: 3.5rem; z-index: 10;">🌍</span>
             <img src="photo_2026-08-27_11-19-02.jpg" alt="Foto Profil Christoford" class="profile-photo" onerror="this.src='https://via.placeholder.com/300?text=Christoford'">
         </div>
     </section>
 
-    <!-- Tambahkan class="reveal" pada setiap elemen yang ingin dianimasikan saat scroll -->
     <section id="about" class="reveal">
-        <h2>About Me</h2>
+        <!-- Emoji Lampu di sebelah About Me -->
+        <h2>About Me <span class="inline-floating-emoji delay-3" style="font-size: 2.2rem; margin-left: 10px;">💡</span></h2>
         <div class="glass-panel">
             <p style="text-align: justify; font-size: 1.1rem;">
                 Combining the serenity of nature with the rapid pace of digital innovation, I believe that technological advancement must be built upon a strong foundation of resilience to sustain life around it.
@@ -211,7 +201,11 @@
     <section id="experience" class="reveal">
         <h2>Experiences</h2>
         <div class="grid">
-            <div class="card reveal">
+            <!-- Posisi Relatif untuk kartu agar emoji tanaman menempel pada kartu ini -->
+            <div class="card reveal" style="position: relative;">
+                <!-- Emoji Tanaman di luar/atas kanan kotak Youth Scientific -->
+                <span class="inline-floating-emoji delay-4" style="position: absolute; top: -25px; right: -25px; font-size: 3rem; z-index: 10;">🌱</span>
+                
                 <h3>Youth Scientific Group</h3>
                 <span class="role">Secretary & Trainer | SMA N 1 Tomohon</span>
                 <p>Participated in and guided the preparation for a scientific writing competition, actively contributing by teaching the structuring process and effective presentation techniques for scientific papers.</p>
@@ -225,7 +219,8 @@
     </section>
 
     <section id="projects" class="reveal">
-        <h2>Projects & Awards</h2>
+        <!-- Emoji Piala (Kejuaraan) di sebelah Projects & Awards -->
+        <h2>Projects & Awards <span class="inline-floating-emoji delay-1" style="font-size: 2.2rem; margin-left: 10px;">🏆</span></h2>
         <div class="grid">
             <div class="card reveal">
                 <h3>Smart Rainwater Harvesting</h3>
@@ -271,7 +266,8 @@
     </section>
 
     <section id="contact" class="reveal">
-        <h2>Contact & Social Media</h2>
+        <!-- Emoji Telepon di sebelah Contact -->
+        <h2>Contact & Social Media <span class="inline-floating-emoji delay-2" style="font-size: 2.2rem; margin-left: 10px;">📞</span></h2>
         <div class="glass-panel" style="text-align: center;">
             <p style="font-size: 1.1rem;">Interested in discussing technology, environmental sustainability, or digital literacy?</p>
             <br><br>
@@ -291,19 +287,15 @@
     <!-- SCRIPT UNTUK ANIMASI SCROLL -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Mencari semua elemen yang memiliki class 'reveal'
             const reveals = document.querySelectorAll(".reveal");
-
-            // Membuat fungsi observer untuk mendeteksi kapan elemen terlihat di layar
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add("active");
                     }
                 });
-            }, { threshold: 0.1 }); // Akan bereaksi saat 10% bagian elemen sudah terlihat
+            }, { threshold: 0.1 }); 
 
-            // Memasang observer ke setiap elemen 'reveal'
             reveals.forEach((reveal) => {
                 observer.observe(reveal);
             });
