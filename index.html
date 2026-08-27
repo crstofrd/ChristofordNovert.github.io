@@ -21,16 +21,52 @@
             font-family: 'Roboto', sans-serif;
             color: var(--dark-text);
             line-height: 1.6;
-            background: linear-gradient(-45deg, #e0eafc, #cfdef3, #e8f0fe, #d2e3fc);
+            /* Latar Belakang Gradien Animasi yang Diperkaya */
+            background: linear-gradient(-45deg, #e0eafc, #cde0f5, #dcf0d5, #fce0e5);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             overflow-x: hidden;
+            position: relative;
         }
 
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* --- ELEMEN 3D MENGAMBANG --- */
+        .floating-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: -1; overflow: hidden;
+        }
+        .floating-emoji {
+            position: absolute; font-size: 2.5rem;
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.15));
+            animation: float3D 12s infinite ease-in-out;
+            transform-style: preserve-3d;
+        }
+        /* Posisi dan pengaturan animasi tiap emoji */
+        .emoji-1 { left: 10%; top: 15%; animation-duration: 14s; }
+        .emoji-2 { left: 85%; top: 25%; font-size: 3rem; animation-duration: 18s; animation-delay: -3s; }
+        .emoji-3 { left: 75%; top: 75%; font-size: 2rem; animation-duration: 12s; animation-delay: -7s; }
+        .emoji-4 { left: 15%; top: 80%; font-size: 3.5rem; animation-duration: 20s; animation-delay: -5s; }
+        .emoji-5 { left: 50%; top: 50%; font-size: 2.5rem; animation-duration: 15s; animation-delay: -10s; }
+        
+        @keyframes float3D {
+            0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            50% { transform: translateY(-40px) rotateX(25deg) rotateY(20deg) rotateZ(15deg); }
+        }
+
+        /* --- ANIMASI SCROLL REVEAL --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         h1, h2, h3 { font-family: 'Product Sans', sans-serif; }
@@ -77,7 +113,7 @@
         }
         .profile-photo:hover { transform: translateZ(50px) rotateY(-15deg) rotateX(10deg); box-shadow: -15px 30px 50px rgba(0,0,0,0.2); }
 
-        section { padding: 80px 50px; max-width: 1100px; margin: 0 auto; }
+        section { padding: 80px 50px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
         section h2 { font-size: 2.5rem; margin-bottom: 30px; text-align: center; color: var(--dark-text); position: relative; }
         section h2::after { content: ''; display: block; width: 60px; height: 4px; background: var(--google-blue); margin: 10px auto 0; border-radius: 2px; }
 
@@ -104,7 +140,7 @@
         .card h3 { font-size: 1.4rem; margin-bottom: 12px; }
         .card .role { font-size: 0.9rem; color: var(--google-blue); font-weight: bold; margin-bottom: 10px; display: block; }
         
-        footer { text-align: center; padding: 30px; background: var(--dark-text); color: rgba(255,255,255,0.8); margin-top: 60px; }
+        footer { text-align: center; padding: 30px; background: var(--dark-text); color: rgba(255,255,255,0.8); margin-top: 60px; position: relative; z-index: 2; }
         
         @media (max-width: 768px) {
             .hero { flex-direction: column-reverse; text-align: center; padding: 100px 20px 40px; }
@@ -119,6 +155,15 @@
 </head>
 <body>
 
+    <!-- Container Elemen 3D Melayang -->
+    <div class="floating-bg">
+        <div class="floating-emoji emoji-1">🚀</div>
+        <div class="floating-emoji emoji-2">🌍</div>
+        <div class="floating-emoji emoji-3">💡</div>
+        <div class="floating-emoji emoji-4">🌱</div>
+        <div class="floating-emoji emoji-5">⭐</div>
+    </div>
+
     <nav>
         <div style="font-weight: bold; font-size: 1.2rem; font-family: 'Product Sans', sans-serif;">Christoford Novert</div>
         <div>
@@ -132,7 +177,7 @@
     <section class="hero">
         <div class="hero-text">
             <h1>Hi! I am Christoford Novert</h1>
-            <p>Informatics Student at Universitas Sam Ratulangi Manado| Passionate about Tech Communities & Open Source.</p>
+            <p>Informatics Student at Universitas Sam Ratulangi Manado | Passionate about Tech Communities & Open Source.</p>
             <a href="#experience" class="btn">Look Around</a>
         </div>
         <div class="hero-image-container">
@@ -140,7 +185,8 @@
         </div>
     </section>
 
-    <section id="about">
+    <!-- Tambahkan class="reveal" pada setiap elemen yang ingin dianimasikan saat scroll -->
+    <section id="about" class="reveal">
         <h2>About Me</h2>
         <div class="glass-panel">
             <p style="text-align: justify; font-size: 1.1rem;">
@@ -158,15 +204,15 @@
         </div>
     </section>
 
-    <section id="experience">
+    <section id="experience" class="reveal">
         <h2>Experiences</h2>
         <div class="grid">
-            <div class="card">
+            <div class="card reveal">
                 <h3>Youth Scientific Group</h3>
                 <span class="role">Secretary & Trainer | SMA N 1 Tomohon</span>
                 <p>Participated in and guided the preparation for a scientific writing competition, actively contributing by teaching the structuring process and effective presentation techniques for scientific papers.</p>
             </div>
-            <div class="card">
+            <div class="card reveal">
                 <h3>Zero Waste Organization</h3>
                 <span class="role">Head Secretary | SMA N 1 Tomohon</span>
                 <p>Led an initiative to recycle organic waste into compost and transform non-organic waste into creative decorations within the school environment.</p>
@@ -174,52 +220,45 @@
         </div>
     </section>
 
-    <section id="projects">
+    <section id="projects" class="reveal">
         <h2>Projects & Awards</h2>
         <div class="grid">
-            <div class="card">
+            <div class="card reveal">
                 <h3>Smart Rainwater Harvesting</h3>
                 <span class="role">Environmental Innovation Concept | SMA N 1 Tomohon</span>
                 <p>Designed a smart drainage and rainwater harvesting system to filter rainwater into a sustainable water source for daily school activities.</p>
             </div>
-            <div class="card">
+            <div class="card reveal">
                 <h3>Compost House Project</h3>
                 <span class="role">Environmental Innovation | SMA N 1 Tomohon</span>
                 <p>Led the design and implementation of a compost house at school, transforming organic waste into useful fertilizer that supports sustainability and can be sold as a valuable product.</p>
             </div>
-            <div class="card">
+            <div class="card reveal">
                 <h3>Certificate of Completion</h3>
                 <span class="role">Microsoft AI Tech - 2025</span>
-                <p>Successfully completed the <strong>Generative AI for Youth</strong> training organized by Microsoft</p>
+                <p>Successfully completed the <strong>Generative AI for Youth</strong> training organized by Microsoft.</p>
             </div>
-            <div class="card">
+            <div class="card reveal">
                 <h3>Certificate of Completion</h3>
-                <span class="role">Ministry of Communication and Digital Affairs of Indonesia - 2025</span>
+                <span class="role">Ministry of Communication and Digital Affairs - 2025</span>
                 <p>Successfully completed the <strong>Introduction to Cyber Security and Career Awareness Micro Skill</strong> training organized by the Ministry of Communication and Digital Affairs of Indonesia.</p>
             </div>
-              <div class="card">
+              <div class="card reveal">
                 <h3>Certificate of Completion</h3>
                 <span class="role">United Nations Economic Commission for Europe (UNECE) – 2025</span>
-                <p>Successfully completed the <strong>E-learning Course on Monitoring Air Pollution Effects under the Convention on Long-range Transboundary Air Pollution</strong> organized by the United Nations Economic Commission for Europe (UNECE), gaining valuable insights into environmental monitoring and transboundary pollution control.</p>
+                <p>Successfully completed the <strong>E-learning Course on Monitoring Air Pollution Effects</strong> gaining valuable insights into environmental monitoring and transboundary pollution control.</p>
             </div>
-
-
-            <div class="card">
-                <h3>National Student Creativity Week Competition</h3>
-                <span class="role">Universitas Sam Ratulangi Manado – Futuristic Ideas Category - 2026</span>
-                <p>Successfully passed the university-level selection in the <strong>National Student Creativity Week Competition</strong> (Futuristic Ideas Category) with an innovative project on developing AI-based automatic kinetic levees to prevent flooding along coastal roads.</p>
+            <div class="card reveal">
+                <h3>National Student Creativity Week</h3>
+                <span class="role">Universitas Sam Ratulangi Manado – 2026</span>
+                <p>Successfully passed the university-level selection (Futuristic Ideas Category) with an innovative project on developing AI-based automatic kinetic levees to prevent flooding.</p>
             </div>
-            <div class="card">
-                <h3>Participant in National Scientific Paper Competition</h3>
-                <span class="role">Ministry of Environment and Forestry of Indonesia - 2023</span>
-                <p>Participated and received a certificate as a contestant in the National Scientific Writing Competition organized by the Ministry of Environment and Forestry of Indonesia.</p>
-            </div>
-            <div class="card">
+            <div class="card reveal">
                 <h3>1st Place Scientific Paper Competition</h3>
                 <span class="role">Universitas Negeri Manado - 2024</span>
                 <p>Achieved First Place in the Provincial Scientific Writing Competition with the project on waste bank efficiency.</p>
             </div>
-             <div class="card">
+             <div class="card reveal">
                 <h3>1st Place Debate Competition</h3>
                 <span class="role">Universitas Negeri Manado - 2024</span>
                 <p>Achieved First Place in the Provincial Debate Competition on Technology and AI, North Sulawesi.</p>
@@ -227,7 +266,7 @@
         </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" class="reveal">
         <h2>Contact & Social Media</h2>
         <div class="glass-panel" style="text-align: center;">
             <p style="font-size: 1.1rem;">Interested in discussing technology, environmental sustainability, or digital literacy?</p>
@@ -245,5 +284,26 @@
         <p>&copy; 2026 Christoford Novert. Didedikasikan untuk memajukan solusi digital dan membentuk masa depan yang lebih cerdas.</p>
     </footer>
 
+    <!-- SCRIPT UNTUK ANIMASI SCROLL -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Mencari semua elemen yang memiliki class 'reveal'
+            const reveals = document.querySelectorAll(".reveal");
+
+            // Membuat fungsi observer untuk mendeteksi kapan elemen terlihat di layar
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, { threshold: 0.1 }); // Akan bereaksi saat 10% bagian elemen sudah terlihat
+
+            // Memasang observer ke setiap elemen 'reveal'
+            reveals.forEach((reveal) => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
 </body>
 </html>
