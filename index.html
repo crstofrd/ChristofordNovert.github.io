@@ -9,8 +9,11 @@
         /* CSS / Styling */
         :root {
             --google-blue: #4285F4;
+            --google-red: #EA4335;
+            --google-yellow: #FBBC05;
+            --google-green: #34A853;
             --dark-text: #202124;
-            --light-bg: #f8f9fa;
+            --light-bg: rgba(255, 255, 255, 0.85); /* Efek Kaca */
         }
         
         * {
@@ -23,107 +26,211 @@
             font-family: 'Roboto', sans-serif;
             color: var(--dark-text);
             line-height: 1.6;
-            background-color: #ffffff;
+            /* Latar Belakang Animasi Gradien */
+            background: linear-gradient(-45deg, #e0eafc, #cfdef3, #e8f0fe, #d2e3fc);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         h1, h2, h3 {
-            font-family: 'Product Sans', sans-serif; /* Mirip font Google */
+            font-family: 'Product Sans', sans-serif;
         }
 
-        /* Navigasi */
+        /* Navigasi - Glassmorphism */
         nav {
             display: flex;
             justify-content: space-between;
             padding: 20px 50px;
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px); /* Efek blur kaca */
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
         }
         nav a {
             text-decoration: none;
             color: var(--dark-text);
             font-weight: 500;
             margin-left: 20px;
+            transition: color 0.3s;
         }
         nav a:hover {
             color: var(--google-blue);
         }
 
-        /* Hero Section */
+        /* Hero Section dengan Layout Flex */
         .hero {
-            height: 90vh;
+            min-height: 90vh;
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* Bersebelahan di layar besar */
             justify-content: center;
             align-items: center;
-            text-align: center;
-            background-color: var(--light-bg);
-            padding: 20px;
+            padding: 50px;
+            gap: 50px;
         }
+        
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            animation: slideInLeft 1s ease-out forwards;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: -webkit-linear-gradient(45deg, var(--google-blue), var(--google-red));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+        
         .hero p {
             font-size: 1.2rem;
-            max-width: 600px;
-            margin-bottom: 20px;
-            color: #5f6368;
+            margin-bottom: 30px;
+            color: #444;
         }
+
         .btn {
             background-color: var(--google-blue);
             color: white;
-            padding: 12px 24px;
+            padding: 12px 28px;
             text-decoration: none;
-            border-radius: 24px;
+            border-radius: 30px;
             font-weight: bold;
-            transition: background 0.3s;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.4);
+            transition: all 0.3s ease;
+            display: inline-block;
         }
+        
         .btn:hover {
-            background-color: #3367d6;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.6);
+        }
+
+        /* AREA FOTO PROFIL - EFEK 3D */
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            perspective: 1000px; /* Perspektif 3D */
+            animation: slideInRight 1s ease-out forwards;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .profile-photo {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-style: preserve-3d;
+        }
+
+        .profile-photo:hover {
+            /* Efek rotasi 3D saat di-hover */
+            transform: translateZ(50px) rotateY(-15deg) rotateX(10deg);
+            box-shadow: -15px 30px 50px rgba(0,0,0,0.2);
         }
 
         /* General Section Layout */
         section {
             padding: 80px 50px;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
         }
+        
         section h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
             text-align: center;
-            color: var(--google-blue);
+            color: var(--dark-text);
+            position: relative;
+        }
+
+        /* Hiasan garis di bawah judul */
+        section h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--google-blue);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Glassmorphism Panel untuk About & Contact */
+        .glass-panel {
+            background: var(--light-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
         }
 
         /* Grid untuk Kartu (Projects & Community) */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            perspective: 1000px;
         }
 
+        /* KARTU 3D */
         .card {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+            border-top: 4px solid var(--google-blue);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
         }
+
+        /* Efek 3D pada Kartu */
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            transform: translateY(-10px) rotateX(5deg) rotateY(2deg);
+            box-shadow: 10px 20px 40px rgba(0,0,0,0.1);
+            border-top-color: var(--google-red); /* Berubah warna saat hover */
         }
+        
+        .card:nth-child(2):hover {
+            border-top-color: var(--google-yellow);
+        }
+
         .card h3 {
-            margin-bottom: 10px;
+            font-size: 1.4rem;
+            margin-bottom: 12px;
         }
+        
         .card .tech-stack {
-            font-size: 0.8rem;
-            color: var(--google-blue);
+            font-size: 0.85rem;
+            color: white;
+            background: var(--google-blue);
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
             margin-bottom: 15px;
             font-weight: bold;
         }
@@ -131,14 +238,26 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             background: var(--dark-text);
-            color: white;
-            margin-top: 40px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 60px;
         }
         
         /* Responsif untuk HP */
         @media (max-width: 768px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 100px 20px 40px;
+            }
+            .hero-text {
+                animation: slideInRight 1s ease-out forwards; /* Ganti arah animasi di HP */
+            }
+            .profile-photo {
+                width: 200px;
+                height: 200px;
+            }
             nav {
                 flex-direction: column;
                 align-items: center;
@@ -150,11 +269,8 @@
             nav a {
                 margin: 0 10px;
             }
-            .hero h1 {
-                font-size: 2rem;
-            }
             section {
-                padding: 40px 20px;
+                padding: 50px 20px;
             }
         }
     </style>
@@ -174,34 +290,42 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Halo, saya [Nama Kamu]</h1>
-        <p>Mahasiswa Teknik Informatika Semester 3 yang bersemangat membangun komunitas dan mengeksplorasi teknologi ekosistem Google.</p>
-        <a href="#projects" class="btn">Lihat Portofolio</a>
+        <div class="hero-text">
+            <h1>Halo, saya [Nama Kamu]</h1>
+            <p>Mahasiswa Teknik Informatika Semester 3 yang bersemangat membangun komunitas dan mengeksplorasi teknologi ekosistem Google.</p>
+            <a href="#projects" class="btn">Lihat Portofolio</a>
+        </div>
+        
+        <!-- BAGIAN FOTO PROFIL -->
+        <div class="hero-image-container">
+            <!-- Ganti "foto-saya.jpg" dengan nama file fotomu -->
+            <img src="foto-saya.jpg" alt="Foto Profil [Nama Kamu]" class="profile-photo" onerror="this.src='https://via.placeholder.com/300?text=Foto+Kamu'">
+        </div>
     </section>
 
     <!-- About Section -->
     <section id="about">
         <h2>Tentang Saya</h2>
-        <p style="text-align: justify;">
-            Saya adalah mahasiswa Teknik Informatika di [Nama Universitas]. Saat ini, saya fokus mendalami pengembangan *software* dan memiliki ketertarikan besar pada ekosistem teknologi Google seperti Android, Firebase, dan Google Cloud. 
-            <br><br>
-            Bagi saya, teknologi tidak hanya tentang menulis kode, tetapi juga tentang bagaimana kita bisa membagikan pengetahuan tersebut kepada orang lain. Oleh karena itu, saya aktif berpartisipasi dalam komunitas mahasiswa untuk belajar, berkolaborasi, dan berkembang bersama.
-        </p>
+        <div class="glass-panel">
+            <p style="text-align: justify; font-size: 1.1rem;">
+                Saya adalah mahasiswa Teknik Informatika di <strong>[Nama Universitas]</strong>. Saat ini, saya fokus mendalami pengembangan <em>software</em> dan memiliki ketertarikan besar pada ekosistem teknologi Google seperti Android, Firebase, dan Google Cloud. 
+                <br><br>
+                Bagi saya, teknologi tidak hanya tentang menulis kode, tetapi juga tentang bagaimana kita bisa membagikan pengetahuan tersebut kepada orang lain. Oleh karena itu, saya aktif berpartisipasi dalam komunitas mahasiswa untuk belajar, berkolaborasi, dan berkembang bersama.
+            </p>
+        </div>
     </section>
 
     <!-- Community & Leadership -->
-    <section id="community" style="background-color: var(--light-bg); max-width: 100%;">
-        <div style="max-width: 1000px; margin: 0 auto;">
-            <h2>Pengalaman Komunitas</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Anggota / Relawan GDSC</h3>
-                    <p>Aktif berpartisipasi dalam acara Google Developer Student Clubs di kampus. Membantu mengkoordinasi workshop pengenalan teknologi dasar bagi mahasiswa baru.</p>
-                </div>
-                <div class="card">
-                    <h3>Panitia Seminar IT Kampus</h3>
-                    <p>Menjadi divisi acara untuk seminar teknologi tahunan di kampus yang dihadiri oleh lebih dari 150 peserta.</p>
-                </div>
+    <section id="community">
+        <h2>Pengalaman Komunitas</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Anggota / Relawan GDSC</h3>
+                <p>Aktif berpartisipasi dalam acara Google Developer Student Clubs di kampus. Membantu mengkoordinasi workshop pengenalan teknologi dasar bagi mahasiswa baru.</p>
+            </div>
+            <div class="card">
+                <h3>Panitia Seminar IT Kampus</h3>
+                <p>Menjadi divisi acara untuk seminar teknologi tahunan di kampus yang dihadiri oleh lebih dari 150 peserta.</p>
             </div>
         </div>
     </section>
@@ -212,36 +336,38 @@
         <div class="grid">
             <div class="card">
                 <h3>Sistem Manajemen Tugas</h3>
-                <div class="tech-stack">HTML, CSS, JavaScript, Firebase</div>
-                <p>Aplikasi web sederhana untuk mencatat dan melacak tugas kuliah mahasiswa secara *real-time*.</p>
+                <div class="tech-stack">HTML/CSS & Firebase</div>
+                <p>Aplikasi web sederhana untuk mencatat dan melacak tugas kuliah mahasiswa secara <em>real-time</em>.</p>
                 <br>
-                <a href="#" style="color: var(--google-blue); text-decoration: none;">Lihat di GitHub &rarr;</a>
+                <a href="#" style="color: var(--google-blue); text-decoration: none; font-weight: bold;">Lihat di GitHub &rarr;</a>
             </div>
             <div class="card">
                 <h3>Kalkulator IPK Otomatis</h3>
                 <div class="tech-stack">Python</div>
                 <p>Program CLI (Command Line Interface) untuk menghitung Indeks Prestasi Kumulatif berdasarkan bobot SKS.</p>
                 <br>
-                <a href="#" style="color: var(--google-blue); text-decoration: none;">Lihat di GitHub &rarr;</a>
+                <a href="#" style="color: var(--google-blue); text-decoration: none; font-weight: bold;">Lihat di GitHub &rarr;</a>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" style="text-align: center;">
+    <section id="contact">
         <h2>Mari Berkolaborasi!</h2>
-        <p>Saya selalu terbuka untuk diskusi mengenai teknologi, komunitas, dan peluang baru.</p>
-        <br>
-        <p>
-            <strong>Email:</strong> email.kamu@gmail.com <br>
-            <strong>LinkedIn:</strong> linkedin.com/in/namakamu <br>
-            <strong>GitHub:</strong> github.com/namakamu
-        </p>
+        <div class="glass-panel" style="text-align: center;">
+            <p style="font-size: 1.1rem;">Saya selalu terbuka untuk diskusi mengenai teknologi, komunitas, dan peluang baru.</p>
+            <br><br>
+            <p style="font-size: 1.2rem; line-height: 2;">
+                📧 <strong>Email:</strong> <a href="mailto:email.kamu@gmail.com" style="color: var(--google-blue); text-decoration: none;">email.kamu@gmail.com</a> <br>
+                💼 <strong>LinkedIn:</strong> <a href="#" style="color: var(--google-blue); text-decoration: none;">linkedin.com/in/namakamu</a> <br>
+                💻 <strong>GitHub:</strong> <a href="#" style="color: var(--google-blue); text-decoration: none;">github.com/namakamu</a>
+            </p>
+        </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 [Nama Kamu]. Dibuat dengan semangat belajar.</p>
+        <p>&copy; 2024 [Nama Kamu]. Dibuat dengan semangat belajar untuk Google Student Ambassador.</p>
     </footer>
 
 </body>
