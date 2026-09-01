@@ -521,21 +521,41 @@ modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
 
 /* Counter */
-const counters=$$(".stat strong");
-const counterObserver=new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting){
-    counters.forEach(c=>{
-      const target=+c.dataset.count; let n=0;
+function animateCounters(){
+  const counters=$$(".stat strong");
+  counters.forEach(c=>{
+    if(c.textContent==="0"){
+      const target=+c.dataset.count;
+      let n=0;
       const step=Math.max(1,Math.ceil(target/25));
       const timer=setInterval(()=>{
-        n=Math.min(target,n+step); c.textContent=n+"+";
+        n=Math.min(target,n+step);
+        c.textContent=n+"+";
         if(n>=target)clearInterval(timer);
       },45);
-    });
-    counterObserver.disconnect();
+    }
+  });
+}
+
+const counterObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      animateCounters();
+      counterObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:0.5});
+
+if($(".stats")){
+  counterObserver.observe($(".stats"));
+}
+
+// Fallback: animate counters after 1 second if not already animated
+setTimeout(()=>{
+  if($$(".stat strong")[0].textContent==="0"){
+    animateCounters();
   }
-});
-counterObserver.observe($(".stats"));
+},1000);
 
 
 </script>
