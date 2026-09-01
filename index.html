@@ -38,8 +38,6 @@
             color: var(--ink);
             line-height: 1.65;
             background: linear-gradient(-45deg, #F5F7F1, #E9EFE6, #DFF5E1, #FCF1F3, #F0E9F5);
-            background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
             overflow-x: hidden;
             position: relative;
         }
@@ -253,7 +251,7 @@
             border-left: 3px solid var(--water); padding-left: 20px; margin-bottom: 18px;
             font-size: 1.12rem; color: var(--ink); text-align: center;
         }
-        .glass-panel p.about-body { font-size: 1.02rem; max-width: 68ch; text-align: center; }
+        .glass-panel p.about-body { font-size: 1.02rem; max-width: 68ch; text-align: left; }
 
         .skills-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; justify-content: center; }
         .skill-pill {
@@ -311,7 +309,7 @@
         .carousel-btn {
             position: absolute; top: 50%; transform: translateY(-50%); border: none;
             background: rgba(23,36,28,0.55); backdrop-filter: blur(4px); color: #fff; width: 42px; height: 42px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10;
+            border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 10;
             transition: background 0.3s ease;
         }
         .carousel-btn:hover { background: var(--moss-deep); }
@@ -750,32 +748,64 @@
                 });
             }
 
-            /* ---- Scroll-based background color change ---- */
+            /* ---- Scroll-based background color change (smooth transition) ---- */
             function updateBackgroundOnScroll() {
                 const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
                 const scrollProgress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
                 
-                // Color palette array for gradual transition
-                const colors = [
-                    ['#F5F7F1', '#E9EFE6', '#DFF5E1', '#FCF1F3', '#F0E9F5'], // Start: light gradient
-                    ['#DFF5E1', '#C8E6C9', '#A5D6A7', '#E8D5E8', '#E1D5E8'], // Mid: more green/purple
-                    ['#C8E6C9', '#B5E7A0', '#90CAF9', '#F1AEA9', '#CE93D8']  // End: blue/pink/purple
-                ];
+                // Interpolate color from start to end
+                const startColor = { r: 245, g: 247, b: 241 }; // #F5F7F1
+                const endColor = { r: 200, g: 230, b: 160 }; // #C8E6A0
                 
-                // Determine which color palette to use based on scroll progress
-                let colorSet, progress;
-                if (scrollProgress < 0.5) {
-                    colorSet = colors[0];
-                    progress = scrollProgress * 2; // 0 to 1
-                } else {
-                    colorSet = colors[1];
-                    progress = (scrollProgress - 0.5) * 2; // 0 to 1
-                }
+                const r = Math.round(startColor.r + (endColor.r - startColor.r) * scrollProgress);
+                const g = Math.round(startColor.g + (endColor.g - startColor.g) * scrollProgress);
+                const b = Math.round(startColor.b + (endColor.b - startColor.b) * scrollProgress);
                 
-                // Create gradient string
-                const gradient = `linear-gradient(-45deg, ${colorSet[0]}, ${colorSet[1]}, ${colorSet[2]}, ${colorSet[3]}, ${colorSet[4]})`;
-                document.body.style.backgroundImage = gradient;
-                document.body.style.backgroundSize = '400% 400%';
+                const color1 = `rgb(${r}, ${g}, ${b})`;
+                
+                // Second color transition
+                const startColor2 = { r: 233, g: 239, b: 230 }; // #E9EFE6
+                const endColor2 = { r: 165, g: 214, b: 167 }; // #A5D6A7
+                
+                const r2 = Math.round(startColor2.r + (endColor2.r - startColor2.r) * scrollProgress);
+                const g2 = Math.round(startColor2.g + (endColor2.g - startColor2.g) * scrollProgress);
+                const b2 = Math.round(startColor2.b + (endColor2.b - startColor2.b) * scrollProgress);
+                
+                const color2 = `rgb(${r2}, ${g2}, ${b2})`;
+                
+                // Third color transition
+                const startColor3 = { r: 223, g: 245, b: 225 }; // #DFF5E1
+                const endColor3 = { r: 144, g: 202, b: 249 }; // #90CAF9
+                
+                const r3 = Math.round(startColor3.r + (endColor3.r - startColor3.r) * scrollProgress);
+                const g3 = Math.round(startColor3.g + (endColor3.g - startColor3.g) * scrollProgress);
+                const b3 = Math.round(startColor3.b + (endColor3.b - startColor3.b) * scrollProgress);
+                
+                const color3 = `rgb(${r3}, ${g3}, ${b3})`;
+                
+                // Fourth color transition
+                const startColor4 = { r: 252, g: 241, b: 243 }; // #FCF1F3
+                const endColor4 = { r: 241, g: 174, b: 169 }; // #F1AEAD
+                
+                const r4 = Math.round(startColor4.r + (endColor4.r - startColor4.r) * scrollProgress);
+                const g4 = Math.round(startColor4.g + (endColor4.g - startColor4.g) * scrollProgress);
+                const b4 = Math.round(startColor4.b + (endColor4.b - startColor4.b) * scrollProgress);
+                
+                const color4 = `rgb(${r4}, ${g4}, ${b4})`;
+                
+                // Fifth color transition
+                const startColor5 = { r: 240, g: 233, b: 245 }; // #F0E9F5
+                const endColor5 = { r: 206, g: 147, b: 216 }; // #CE93D8
+                
+                const r5 = Math.round(startColor5.r + (endColor5.r - startColor5.r) * scrollProgress);
+                const g5 = Math.round(startColor5.g + (endColor5.g - startColor5.g) * scrollProgress);
+                const b5 = Math.round(startColor5.b + (endColor5.b - startColor5.b) * scrollProgress);
+                
+                const color5 = `rgb(${r5}, ${g5}, ${b5})`;
+                
+                // Create smooth gradient
+                const gradient = `linear-gradient(-45deg, ${color1}, ${color2}, ${color3}, ${color4}, ${color5})`;
+                document.body.style.background = gradient;
             }
             
             window.addEventListener('scroll', updateBackgroundOnScroll, { passive: true });
