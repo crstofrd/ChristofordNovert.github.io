@@ -152,6 +152,7 @@
         /* Carousel styles (reusable for each section) */
         .carousel { position: relative; margin: 20px auto 30px; max-width: 100%; overflow: hidden; border-radius: 12px; }
         .carousel-track { display: flex; gap: 12px; transition: transform 0.45s cubic-bezier(.22,.9,.32,1); will-change: transform; padding: 12px; }
+        .carousel-scroller { display: flex; gap: 12px; will-change: transform; }
         .carousel-item { min-width: 300px; flex: 0 0 auto; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
         .carousel-item img { display: block; width: 100%; height: 200px; object-fit: cover; }
         .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); border: none; background: rgba(0,0,0,0.5); color: #fff; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
@@ -350,74 +351,93 @@
             }, { threshold: 0.1 });
             reveals.forEach((reveal) => observer.observe(reveal));
 
-            // Initialize carousels
+            // Initialize carousels (continuous smooth auto-scroll with transition)
             function initCarousels() {
                 const carousels = document.querySelectorAll('.carousel');
                 carousels.forEach((carousel) => {
-                    const track = carousel.querySelector('.carousel-track');
-                    const items = Array.from(carousel.querySelectorAll('.carousel-item'));
+                    const origTrack = carousel.querySelector('.carousel-track');
+                    if (!origTrack) return;
+                    const items = Array.from(origTrack.querySelectorAll('.carousel-item'));
+                    if (items.length === 0) return;
+
+                    // Create scroller wrapper and duplicate items for seamless loop
+                    const scroller = document.createElement('div');
+                    scroller.className = 'carousel-scroller';
+                    scroller.style.display = 'flex';
+                    scroller.style.gap = '12px';
+                    scroller.style.alignItems = 'stretch';
+                    scroller.style.willChange = 'transform';
+
+                    items.forEach(it => scroller.appendChild(it.cloneNode(true)));
+                    items.forEach(it => scroller.appendChild(it.cloneNode(true)));
+
+                    // Replace original track with the scroller
+                    origTrack.parentNode.replaceChild(scroller, origTrack);
+
                     const prevBtn = carousel.querySelector('.carousel-btn.prev');
                     const nextBtn = carousel.querySelector('.carousel-btn.next');
-                    const intervalMs = parseInt(carousel.dataset.interval || 3500, 10);
+                    const speed = parseFloat(carousel.dataset.speed) || 60; // px per second
 
-                    if (!track || items.length === 0) return;
+                    let rafId = null;
+                    let lastTime = null;
+                    let offset = 0;
+                    let paused = false;
 
-                    let index = 0;
-                    let autoTimer = null;
-                    let isDragging = false;
-                    let startX = 0;
-                    let currentTranslate = 0;
-
-                    const gap = 12; // match CSS gap
-                    function itemWidth() {
-                        return items[0].getBoundingClientRect().width + gap;
+                    function step(ts) {
+                        if (!lastTime) lastTime = ts;
+                        const dt = (ts - lastTime) / 1000;
+                        lastTime = ts;
+                        if (!paused) {
+                            offset += speed * dt;
+                            const halfWidth = scroller.scrollWidth / 2 || 1;
+                            if (offset >= halfWidth) offset -= halfWidth;
+                        }
+                        scroller.style.transform = `translateX(${-offset}px)`;
+                        rafId = requestAnimationFrame(step);
                     }
 
-                    function moveTo(i, animate = true) {
-                        index = (i + items.length) % items.length;
-                        const x = - index * itemWidth();
-                        if (!animate) track.style.transition = 'none';
-                        else track.style.transition = '';
-                        track.style.transform = `translateX(${x}px)`;
-                        currentTranslate = x;
-                    }
-
-                    function next() { moveTo(index + 1); }
-                    function prev() { moveTo(index - 1); }
-
-                    function startAuto() {
-                        stopAuto();
-                        autoTimer = setInterval(next, intervalMs);
-                    }
-                    function stopAuto() { if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
-
-                    // Buttons
-                    if (nextBtn) nextBtn.addEventListener('click', () => { next(); startAuto(); });
-                    if (prevBtn) prevBtn.addEventListener('click', () => { prev(); startAuto(); });
+                    function startAuto() { if (!rafId) { lastTime = null; rafId = requestAnimationFrame(step); } }
+                    function stopAuto() { if (rafId) { cancelAnimationFrame(rafId); rafId = null; lastTime = null; } }
 
                     // Pause on hover
-                    carousel.addEventListener('mouseenter', stopAuto);
-                    carousel.addEventListener('mouseleave', startAuto);
+                    carousel.addEventListener('mouseenter', () => { paused = true; });
+                    carousel.addEventListener('mouseleave', () => { paused = false; });
 
-                    // Touch / drag support
-                    carousel.addEventListener('touchstart', (e) => {
-                        stopAuto(); isDragging = true; startX = e.touches[0].clientX; track.style.transition = 'none';
-                    }, { passive: true });
-                    carousel.addEventListener('touchmove', (e) => {
-                        if (!isDragging) return; const dx = e.touches[0].clientX - startX; track.style.transform = `translateX(${currentTranslate + dx}px)`; }, { passive: true });
+                    // Jump by n pixels with smooth transition, then resume continuous scroll
+                    function jumpByPixels(px) {
+                        paused = true; stopAuto();
+                        const target = offset + px;
+                        scroller.style.transition = 'transform 0.45s cubic-bezier(.22,.9,.32,1)';
+                        scroller.style.transform = `translateX(${-target}px)`;
+                        function onEnd() {
+                            scroller.style.transition = 'none';
+                            const halfWidth = scroller.scrollWidth / 2 || 1;
+                            offset = ((target % halfWidth) + halfWidth) % halfWidth;
+                            scroller.style.transform = `translateX(${-offset}px)`;
+                            scroller.removeEventListener('transitionend', onEnd);
+                            paused = false; startAuto();
+                        }
+                        scroller.addEventListener('transitionend', onEnd);
+                    }
+
+                    // Buttons: move by one item width
+                    function itemWidth() { return items[0].getBoundingClientRect().width + 12; }
+                    if (nextBtn) nextBtn.addEventListener('click', () => jumpByPixels(itemWidth()));
+                    if (prevBtn) prevBtn.addEventListener('click', () => jumpByPixels(-itemWidth()));
+
+                    // Touch swipe: detect direction and jump
+                    let touchStartX = 0;
+                    carousel.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; paused = true; }, { passive: true });
                     carousel.addEventListener('touchend', (e) => {
-                        if (!isDragging) return; isDragging = false; const dx = (e.changedTouches[0].clientX - startX);
-                        if (Math.abs(dx) > 40) { if (dx < 0) next(); else prev(); } else { moveTo(index); }
-                        startAuto();
-                    });
+                        const dx = e.changedTouches[0].clientX - touchStartX;
+                        const threshold = 40;
+                        if (Math.abs(dx) > threshold) {
+                            if (dx < 0) jumpByPixels(itemWidth()); else jumpByPixels(-itemWidth());
+                        } else { paused = false; }
+                    }, { passive: true });
 
-                    // Resize handler to recalc positions
-                    window.addEventListener('resize', () => moveTo(index, false));
-
-                    // Initial layout and start
-                    // Wait a tick for images to load so widths are correct
-                    setTimeout(() => moveTo(0, false), 50);
-                    startAuto();
+                    // Start after a short delay to allow images to load and sizes to settle
+                    setTimeout(() => { offset = 0; scroller.style.transform = 'translateX(0)'; startAuto(); }, 120);
                 });
             }
 
