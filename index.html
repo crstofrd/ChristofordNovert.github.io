@@ -521,41 +521,44 @@ modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
 
 /* Counter */
-function animateCounters(){
-  const counters=$$(".stat strong");
-  counters.forEach(c=>{
-    if(c.textContent==="0"){
-      const target=+c.dataset.count;
-      let n=0;
-      const step=Math.max(1,Math.ceil(target/25));
-      const timer=setInterval(()=>{
-        n=Math.min(target,n+step);
-        c.textContent=n+"+";
-        if(n>=target)clearInterval(timer);
-      },45);
-    }
-  });
-}
+document.addEventListener("DOMContentLoaded", () => {
+  const animateCounters = () => {
+    const counters = document.querySelectorAll(".stat strong");
+    counters.forEach(c => {
+      const currentText = c.textContent.trim();
+      if (currentText === "0") {
+        const target = parseInt(c.dataset.count) || 0;
+        let n = 0;
+        const step = Math.max(1, Math.ceil(target / 25));
+        const timer = setInterval(() => {
+          n = Math.min(target, n + step);
+          c.textContent = n + "+";
+          if (n >= target) clearInterval(timer);
+        }, 45);
+      }
+    });
+  };
 
-const counterObserver=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      animateCounters();
-      counterObserver.unobserve(entry.target);
-    }
-  });
-},{threshold:0.5});
-
-if($(".stats")){
-  counterObserver.observe($(".stats"));
-}
-
-// Fallback: animate counters after 1 second if not already animated
-setTimeout(()=>{
-  if($$(".stat strong")[0].textContent==="0"){
-    animateCounters();
+  const statSection = document.querySelector(".stats");
+  if (statSection) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        animateCounters();
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    
+    observer.observe(statSection);
   }
-},1000);
+  
+  // Fallback: animate after delay
+  setTimeout(() => {
+    const firstCounter = document.querySelector(".stat strong");
+    if (firstCounter && firstCounter.textContent.trim() === "0") {
+      animateCounters();
+    }
+  }, 500);
+});
 
 
 </script>
