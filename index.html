@@ -138,7 +138,7 @@
             box-shadow: 0 10px 30px rgba(23,36,28,0.08);
             border-bottom-color: var(--line);
         }
-        .nav-brand { font-weight: 700; font-size: 1.15rem; font-family: var(--font-display); color: var(--ink); letter-spacing: -0.01em; white-space: nowrap; }
+        .nav-brand { font-weight: 700; font-size: 1.15rem; font-family: var(--font-display); color: var(--ink); letter-spacing: -0.01em; }
         .nav-links { display: flex; gap: 6px; }
         nav a {
             text-decoration: none; color: var(--ink-soft); font-weight: 500; font-size: 0.96rem;
@@ -240,7 +240,6 @@
             margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
         }
         section > h2 { padding-left: 22px; border-left: 4px solid var(--moss); }
-        #about > h2 { padding-left: 0; border-left: none; justify-content: center; }
         .section-lede { color: var(--ink-soft); margin: 14px 0 36px 22px; max-width: 60ch; font-size: 1.02rem; }
 
         /* --- ABOUT --- */
@@ -251,11 +250,11 @@
         }
         .about-lead {
             border-left: 3px solid var(--water); padding-left: 20px; margin-bottom: 18px;
-            font-size: 1.12rem; color: var(--ink);
+            font-size: 1.12rem; color: var(--ink); text-align: center;
         }
-        .glass-panel p.about-body { font-size: 1.02rem; max-width: 68ch; }
+        .glass-panel p.about-body { font-size: 1.02rem; max-width: 68ch; text-align: center; }
 
-        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+        .skills-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; justify-content: center; }
         .skill-pill {
             background: var(--paper); border: 1px solid var(--line); color: var(--ink);
             padding: 9px 18px 9px 14px; border-radius: 20px; font-weight: 500; font-size: 0.9rem;
@@ -387,10 +386,9 @@
             <div class="hero-rocket">
                 <span class="inline-floating-emoji delay-1">🚀</span>
             </div>
-            <h1>Hi! I am</h1>
-            </h1>Christoford Novert</h1>
+            <h1>Hi! I am<br>Christoford Novert</h1>
             <p>Informatics Student at Universitas Sam Ratulangi Manado | Passionate about Tech Communities & Open Source.</p>
-            <a href="#experience" class="btn">👀 Look Around</a>
+            <a href="#experience" class="btn">Look Around</a>
         </div>
         <div class="hero-image-container">
             <span class="earth-emoji inline-floating-emoji delay-2">🌍</span>
