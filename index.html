@@ -237,9 +237,10 @@
         section { padding: 110px 50px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
         section h2 {
             font-size: clamp(1.8rem, 2.2vw + 1rem, 2.5rem); font-weight: 600; letter-spacing: -0.01em;
-            margin-bottom: 8px; display: flex; align-items: center; gap: 12px; justify-content: center;
+            margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
         }
-        section > h2 { padding-left: 0; border-left: none; }
+        section > h2 { padding-left: 22px; border-left: 4px solid var(--moss); }
+        #about > h2 { padding-left: 0; border-left: none; justify-content: center; }
         .section-lede { color: var(--ink-soft); margin: 14px 0 36px 22px; max-width: 60ch; font-size: 1.02rem; }
 
         /* --- ABOUT --- */
@@ -349,8 +350,7 @@
             nav.scrolled { padding: 12px 24px; }
             .nav-links { flex-wrap: wrap; justify-content: center; }
             section { padding: 72px 22px; }
-            section h2 { justify-content: center; }
-            section > h2 { padding-left: 0; }
+            section > h2 { padding-left: 16px; }
             .section-lede { margin-left: 16px; }
             .timeline { padding-left: 46px; }
             .timeline-marker { left: -46px; width: 34px; height: 34px; font-size: 0.9rem; }
