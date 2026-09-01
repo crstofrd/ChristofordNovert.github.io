@@ -240,6 +240,7 @@
             margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
         }
         section > h2 { padding-left: 22px; border-left: 4px solid var(--moss); }
+        #about > h2 { padding-left: 0; border-left: none; justify-content: center; }
         .section-lede { color: var(--ink-soft); margin: 14px 0 36px 22px; max-width: 60ch; font-size: 1.02rem; }
 
         /* --- ABOUT --- */
@@ -388,7 +389,7 @@
             </div>
             <h1>Hi! I am<br>Christoford Novert</h1>
             <p>Informatics Student at Universitas Sam Ratulangi Manado | Passionate about Tech Communities & Open Source.</p>
-            <a href="#experience" class="btn">Look Around</a>
+            <a href="#experience" class="btn">👀 Look Around</a>
         </div>
         <div class="hero-image-container">
             <span class="earth-emoji inline-floating-emoji delay-2">🌍</span>
@@ -748,6 +749,37 @@
                     setTimeout(() => { offset = 0; scroller.style.transform = 'translateX(0)'; if (!reduceMotion) startAuto(); }, 120);
                 });
             }
+
+            /* ---- Scroll-based background color change ---- */
+            function updateBackgroundOnScroll() {
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollProgress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+                
+                // Color palette array for gradual transition
+                const colors = [
+                    ['#F5F7F1', '#E9EFE6', '#DFF5E1', '#FCF1F3', '#F0E9F5'], // Start: light gradient
+                    ['#DFF5E1', '#C8E6C9', '#A5D6A7', '#E8D5E8', '#E1D5E8'], // Mid: more green/purple
+                    ['#C8E6C9', '#B5E7A0', '#90CAF9', '#F1AEA9', '#CE93D8']  // End: blue/pink/purple
+                ];
+                
+                // Determine which color palette to use based on scroll progress
+                let colorSet, progress;
+                if (scrollProgress < 0.5) {
+                    colorSet = colors[0];
+                    progress = scrollProgress * 2; // 0 to 1
+                } else {
+                    colorSet = colors[1];
+                    progress = (scrollProgress - 0.5) * 2; // 0 to 1
+                }
+                
+                // Create gradient string
+                const gradient = `linear-gradient(-45deg, ${colorSet[0]}, ${colorSet[1]}, ${colorSet[2]}, ${colorSet[3]}, ${colorSet[4]})`;
+                document.body.style.backgroundImage = gradient;
+                document.body.style.backgroundSize = '400% 400%';
+            }
+            
+            window.addEventListener('scroll', updateBackgroundOnScroll, { passive: true });
+            updateBackgroundOnScroll(); // Initialize
 
             initCarousels();
         });
