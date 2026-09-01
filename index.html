@@ -37,7 +37,9 @@
             font-family: var(--font-body);
             color: var(--ink);
             line-height: 1.65;
-            background: var(--paper);
+            background: linear-gradient(-45deg, #F5F7F1, #E9EFE6, #DFF5E1, #FCF1F3, #F0E9F5);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             overflow-x: hidden;
             position: relative;
         }
@@ -71,6 +73,12 @@
         @keyframes blobDrift {
             0%   { transform: translate(0, 0) scale(1); }
             100% { transform: translate(40px, -30px) scale(1.12); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* --- SCROLL PROGRESS --- */
