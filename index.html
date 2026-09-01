@@ -155,7 +155,7 @@
         .carousel-scroller { display: flex; gap: 12px; will-change: transform; }
         .carousel-item { min-width: 300px; flex: 0 0 auto; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
         .carousel-item img { display: block; width: 100%; height: 200px; object-fit: cover; }
-        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); border: none; background: rgba(0,0,0,0.5); color: #fff; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); border: none; background: rgba(0,0,0,0.5); color: #fff; width: 42px; height: 42px; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
         .carousel-btn:hover { background: rgba(0,0,0,0.65); }
         .carousel-btn.prev { left: 12px; }
         .carousel-btn.next { right: 12px; }
@@ -198,16 +198,6 @@
     <section id="about" class="reveal">
         <!-- Emoji Lampu di sebelah About Me -->
         <h2>About Me <span class="inline-floating-emoji delay-3" style="font-size: 2.2rem; margin-left: 10px;">💡</span></h2>
-        <!-- Carousel untuk gambar di bawah judul About Me -->
-        <div class="carousel" data-interval="3500">
-            <button class="carousel-btn prev" aria-label="Previous">❮</button>
-            <div class="carousel-track">
-                <div class="carousel-item"><img src="https://source.unsplash.com/random/800x450?sig=11" alt="About 1"></div>
-                <div class="carousel-item"><img src="https://source.unsplash.com/random/800x450?sig=12" alt="About 2"></div>
-                <div class="carousel-item"><img src="https://source.unsplash.com/random/800x450?sig=13" alt="About 3"></div>
-            </div>
-            <button class="carousel-btn next" aria-label="Next">❯</button>
-        </div>
         <div class="glass-panel">
             <p style="text-align: justify; font-size: 1.1rem;">
                 Combining the serenity of nature with the rapid pace of digital innovation, I believe that technological advancement must be built upon a strong foundation of resilience to sustain life around it.
@@ -311,16 +301,6 @@
     <section id="contact" class="reveal">
         <!-- Emoji Telepon di sebelah Contact -->
         <h2>Contact & Social Media <span class="inline-floating-emoji delay-2" style="font-size: 2.2rem; margin-left: 10px;">📞</span></h2>
-        <!-- Carousel untuk gambar di bawah judul Contact -->
-        <div class="carousel" data-interval="4500">
-            <button class="carousel-btn prev" aria-label="Previous">❮</button>
-            <div class="carousel-track">
-                <div class="carousel-item"><img src="https://source.unsplash.com/random/800x450?sig=41" alt="Contact 1"></div>
-                <div class="carousel-item"><img src="https://source.unsplash.com/random/800x450?sig=42" alt="Contact 2"></div>
-                <div class="carousel-item"><img src="https://source.unsplash.com/random/800x450?sig=43" alt="Contact 3"></div>
-            </div>
-            <button class="carousel-btn next" aria-label="Next">❯</button>
-        </div>
         <div class="glass-panel" style="text-align: center;">
             <p style="font-size: 1.1rem;">Interested in discussing technology, environmental sustainability, or digital literacy?</p>
             <br><br>
