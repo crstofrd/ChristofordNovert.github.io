@@ -1,1 +1,0 @@
-# ChristofordNovert.github.io
