@@ -498,6 +498,7 @@ footer b{color:var(--green)}
 .modal-image.show{display:block}
 .modal.open .modal-image.show{clip-path:inset(0 0 0% 0)}
 .modal-image img{display:block;width:100%;max-height:430px;object-fit:contain;background:rgba(0,0,0,.08)}
+.modal-image iframe{display:block;width:100%;height:430px;border:0;background:#fff}
 
 /* BACK TO TOP */
 .to-top{position:fixed;right:24px;bottom:24px;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(10px);color:var(--text);font-size:1.15rem;cursor:pointer;z-index:900;box-shadow:0 14px 30px rgba(19,35,26,.16);opacity:0;transform:translateY(12px);pointer-events:none;transition:.35s}
@@ -619,10 +620,14 @@ footer b{color:var(--green)}
     <div class="org-track">
       <div class="org-photo"><img src="Zero Waste.jpg" alt="Dokumentasi organisasi 1" onerror="this.parentElement.classList.add('org-missing')"></div>
       <div class="org-photo"><img src="Zero Waste 2.jpg" alt="Dokumentasi organisasi 2" onerror="this.parentElement.classList.add('org-missing')"></div>
+      <div class="org-photo"><img src="Organizationphoto1.jpg" alt="Dokumentasi organisasi 3" onerror="this.parentElement.classList.add('org-missing')"></div>
+      <div class="org-photo"><img src="Organizationphoto2.jpg" alt="Dokumentasi organisasi 4" onerror="this.parentElement.classList.add('org-missing')"></div>
     </div>
     <div class="org-track" aria-hidden="true">
       <div class="org-photo"><img src="Zero Waste.jpg" alt="" onerror="this.parentElement.classList.add('org-missing')"></div>
       <div class="org-photo"><img src="Zero Waste 2.jpg" alt="" onerror="this.parentElement.classList.add('org-missing')"></div>
+      <div class="org-photo"><img src="Organizationphoto1.jpg" alt="" onerror="this.parentElement.classList.add('org-missing')"></div>
+      <div class="org-photo"><img src="Organizationphoto2.jpg" alt="" onerror="this.parentElement.classList.add('org-missing')"></div>
     </div>
   </div>
 
@@ -811,12 +816,12 @@ footer b{color:var(--green)}
       <div><h3>1st Place Debate Competition</h3><p>Technology and AI debate competition.</p><div class="project-footer"><span>2024 · AWARD</span><span class="arrow">↗</span></div></div>
     </article>
     <article class="glass project reveal" data-category="award" data-title="1st Place - Education Ambassador Competition" data-meta="North Sulawesi Province · 2023" data-text="Achieved First Place in the Provincial Education Ambassador Competition of North Sulawesi in 2023, recognized for excellence in leadership, communication, and educational advocacy.">
-      <div class="project-image"><object data="Certificate PPPSU.pdf" type="application/pdf"><a href="Certificate PPPSU.pdf" target="_blank" rel="noopener">Open certificate</a></object></div>
+      <div class="project-image"><object data="educationambassador.jpg" type="image/jpeg"><a href="educationambassador.jpg" target="_blank" rel="noopener">Open certificate</a></object></div>
       <div class="project-bg"></div><div class="project-icon">🏆</div>
       <div><h3>1st Place - Education Ambassador Competition</h3><p>Provincial competition for education ambassador selection.</p><div class="project-footer"><span>2023 · AWARD</span><span class="arrow">↗</span></div></div>
     </article>
     <article class="glass project reveal" data-category="achievement" data-title="School Environmental Ambassador" data-meta="SMA Negeri 1 Tomohon · 2023" data-text="Appointed as the School Environmental Ambassador at SMA Negeri 1 Tomohon in 2023, promoting sustainability, environmental awareness, and student engagement in eco-friendly initiatives.">
-      <div class="project-image"><object data="Certificate environment ambassador.pdf" type="application/pdf"><a href="Certificate environment ambassador.pdf" target="_blank" rel="noopener">Open certificate</a></object></div>
+      <div class="project-image"><object data="environmentambassador.jpg" type="image/jpeg"><a href="environmentambassador.jpg" target="_blank" rel="noopener">Open certificate</a></object></div>
       <div class="project-bg"></div><div class="project-icon">🌱</div>
       <div><h3>School Environmental Ambassador</h3><p>Recognition as environmental ambassador at SMA Negeri 1 Tomohon.</p><div class="project-footer"><span>2023 · AWARD</span><span class="arrow">↗</span></div></div>
     </article>
@@ -904,7 +909,7 @@ footer b{color:var(--green)}
           <span class="flip-hint">📷 Tap to view photo</span>
         </div>
         <div class="flip-card-back glass">
-          <img src="images/spiritual/sinode-gmim.jpg" alt="Remaja Teladan Sinode GMIM" onerror="this.parentElement.classList.add('flip-missing')">
+          <img src="Retsin.jpg" alt="Remaja Teladan Sinode GMIM" onerror="this.parentElement.classList.add('flip-missing')">
           <div class="flip-caption">Remaja Teladan — Sinode GMIM<span>Tap to flip back</span></div>
         </div>
       </div>
@@ -958,7 +963,7 @@ footer b{color:var(--green)}
           <span class="flip-hint">📷 Tap to view photo</span>
         </div>
         <div class="flip-card-back glass">
-          <img src="images/spiritual/lomba-pidato-rohani-indonesia.jpg" alt="Lomba Pidato Rohani Bahasa Indonesia Sinode GMIM" onerror="this.parentElement.classList.add('flip-missing')">
+          <img src="Indonesianspeech.jpg" alt="Lomba Pidato Rohani Bahasa Indonesia Sinode GMIM" onerror="this.parentElement.classList.add('flip-missing')">
           <div class="flip-caption">Religious Speech Competition (Indonesian)<span>Tap to flip back</span></div>
         </div>
       </div>
@@ -1012,7 +1017,7 @@ footer b{color:var(--green)}
     <button class="close" id="close" aria-label="Close">×</button>
     <button class="modal-nav prev" id="modalPrev" aria-label="Previous" hidden>‹</button>
     <button class="modal-nav next" id="modalNext" aria-label="Next" hidden>›</button>
-    <div class="modal-image" id="modalImageWrap"><img id="modalImage" alt=""></div>
+    <div class="modal-image" id="modalImageWrap"><img id="modalImage" alt=""><iframe id="modalDocument" title="Certificate document"></iframe></div>
     <div class="kicker" id="modalMeta"></div>
     <h3 id="modalTitle"></h3>
     <p id="modalText"></p>
@@ -1120,7 +1125,11 @@ window.addEventListener("scroll",()=>{
   const max=document.documentElement.scrollHeight-innerHeight;
   $("#progress").style.width=(max?scrollY/max*100:0)+"%";
   if(siteNav) siteNav.classList.toggle("scrolled", scrollY>30);
-  if(toTopBtn) toTopBtn.classList.toggle("show", scrollY>500);
+  if(toTopBtn){
+    const showToTop = scrollY > 500;
+    toTopBtn.classList.toggle("show", showToTop);
+    toTopBtn.hidden = !showToTop;
+  }
 },{passive:true});
 toTopBtn && toTopBtn.addEventListener("click", ()=> window.scrollTo({top:0, behavior:"smooth"}));
 
@@ -1164,6 +1173,7 @@ function spawnRipple(el, e){
 const modal=$("#modal");
 const modalImageWrap = $("#modalImageWrap");
 const modalImage = $("#modalImage");
+const modalDocument = $("#modalDocument");
 const modalPrev = $("#modalPrev");
 const modalNext = $("#modalNext");
 const clickable = Array.from($$(".project, .idea-card"));
@@ -1175,11 +1185,29 @@ function fillModal(el){
   $("#modalText").textContent=el.dataset.text;
 
   const img = el.querySelector(".project-image img");
+  const documentObject = el.querySelector(".project-image object");
+  modalImage.style.display = "none";
+  modalDocument.style.display = "none";
+  modalImage.removeAttribute("src");
+  modalDocument.removeAttribute("src");
+
   if(img && img.parentElement && !img.parentElement.classList.contains("missing-image")){
     modalImageWrap.style.transition = "none";
     modalImageWrap.classList.remove("show");
     modalImage.src = img.src;
     modalImage.alt = img.alt;
+    modalImage.style.display = "block";
+    void modalImageWrap.offsetWidth;
+    requestAnimationFrame(()=>{
+      modalImageWrap.style.transition = "";
+      modalImageWrap.classList.add("show");
+    });
+  }else if(documentObject && documentObject.dataset){
+    modalImageWrap.style.transition = "none";
+    modalImageWrap.classList.remove("show");
+    modalDocument.src = documentObject.data;
+    modalDocument.title = el.dataset.title || "Certificate document";
+    modalDocument.style.display = "block";
     void modalImageWrap.offsetWidth;
     requestAnimationFrame(()=>{
       modalImageWrap.style.transition = "";
@@ -1187,7 +1215,6 @@ function fillModal(el){
     });
   }else{
     modalImageWrap.classList.remove("show");
-    modalImage.removeAttribute("src");
   }
 
   const hasMultiple = clickable.length > 1;
